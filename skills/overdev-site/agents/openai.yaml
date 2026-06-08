@@ -1,0 +1,4 @@
+interface:
+  display_name: "Overdev Site"
+  short_description: "Create CF DNS and 1Panel proxy sites."
+  default_prompt: "Create an overdev.cn site for a service by adding Cloudflare DNS and binding the domain to a 1Panel/OpenResty reverse proxy."

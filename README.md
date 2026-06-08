@@ -4,6 +4,18 @@ Claude Code skills published by [@overdev-l](https://github.com/overdev-l).
 
 ## Skills
 
+### `overdev-site` — Cloudflare DNS → 1Panel/OpenResty site
+
+Creates or updates an `overdev.cn` service entrypoint by adding a Cloudflare DNS record, binding the hostname to a local service port through 1Panel OpenResty, issuing a Let's Encrypt certificate, and installing a renewal hook.
+
+**Install:**
+
+```bash
+npx skills add overdev-l/overdev-skills --skill overdev-site
+```
+
+Use it when publishing services such as `n8n.overdev.cn`, `dify.overdev.cn`, or any other app running on the overdev OCI host.
+
 ### `ovbr` — Standalone brainstorming → spec
 
 Turns a vague idea into a written spec document, then stops. No auto-chaining to implementation planning, no surprise next steps. You get the spec; you decide what to do with it.
