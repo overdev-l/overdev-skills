@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deploy TG Mini Game"
+  short_description: "One-command Cloudflare production deploys"
+  default_prompt: "Use $deploy-tg-mini-game to deploy this Telegram mini game to Cloudflare Workers with production secrets and a custom domain."

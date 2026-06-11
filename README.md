@@ -4,6 +4,18 @@ Claude Code skills published by [@overdev-l](https://github.com/overdev-l).
 
 ## Skills
 
+### `deploy-tg-mini-game` — Telegram Mini Game → Cloudflare Workers production
+
+Deploys a `tg-mini-game-factory` style Telegram Mini App game to Cloudflare Workers with Static Assets, Wrangler secrets, production Vite variables, optional Supabase schema application, and optional custom domain binding.
+
+**Install:**
+
+```bash
+npx skills add overdev-l/overdev-skills --skill deploy-tg-mini-game
+```
+
+Use it when you want a game repository to become publicly reachable in production after providing Cloudflare, Telegram, Supabase, AdsGram, and optional hostname configuration.
+
 ### `overdev-site` — Cloudflare DNS → 1Panel/OpenResty site
 
 Creates or updates an `overdev.cn` service entrypoint by adding a Cloudflare DNS record, binding the hostname to a local service port through 1Panel OpenResty, issuing a Let's Encrypt certificate, and installing a renewal hook.
