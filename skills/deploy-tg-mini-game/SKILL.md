@@ -1,6 +1,6 @@
 ---
 name: deploy-tg-mini-game
-description: Use when deploying a Telegram Mini App game from a tg-mini-game-factory style repository to production on Cloudflare Workers. Automates production readiness checks, Telegram and AdsGram SDK verification, Vite build variables, Wrangler secrets, Workers Static Assets deployment, optional custom domain binding, Supabase schema checks, and post-deploy verification.
+description: Use when deploying a Telegram Mini App game from a tg-mini-game-factory style repository to production on Cloudflare Workers. Automates production readiness checks, Telegram SDK verification, Monetag or pluggable ad-provider build variables, Wrangler secrets, Workers Static Assets deployment, optional custom domain binding, Supabase schema checks, and post-deploy verification.
 ---
 
 # Deploy TG Mini Game
@@ -35,7 +35,8 @@ Read secrets from environment variables or a local env file. Do not print them.
 - `TELEGRAM_BOT_TOKEN`
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY` or `SUPABASE_SECRET_KEY`
-- `VITE_ADSGRAM_BLOCK_ID`
+- `VITE_AD_PROVIDER`: defaults to `monetag`
+- `VITE_REWARDED_AD_ZONE_ID`: Monetag rewarded interstitial zone id or the selected provider's rewarded placement id
 
 For automatic schema application, also provide:
 
@@ -49,7 +50,6 @@ If `SUPABASE_DB_URL` is absent, verify the Supabase REST tables and fail with cl
 2. Load production env from `--env-file`, `.env.production`, or the shell.
 3. Ensure `apps/game/index.html` loads:
    - `https://telegram.org/js/telegram-web-app.js`
-   - `https://sad.adsgram.ai/js/sad.min.js`
 4. Set Worker secrets with `wrangler secret put` from env.
 5. Force `VITE_API_BASE_URL` to an empty string for production unless the user explicitly provides another production URL.
 6. Optionally apply `supabase/schema.sql` through `psql` when `--apply-supabase-schema` and `SUPABASE_DB_URL` are available.

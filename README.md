@@ -14,7 +14,7 @@ Deploys a `tg-mini-game-factory` style Telegram Mini App game to Cloudflare Work
 npx skills add overdev-l/overdev-skills --skill deploy-tg-mini-game
 ```
 
-Use it when you want a game repository to become publicly reachable in production after providing Cloudflare, Telegram, Supabase, AdsGram, and optional hostname configuration.
+Use it when you want a game repository to become publicly reachable in production after providing Cloudflare, Telegram, Supabase, ad provider, and optional hostname configuration.
 
 ### `overdev-site` — Cloudflare DNS → 1Panel/OpenResty site
 

@@ -18,10 +18,7 @@ import urllib.request
 
 RUNTIME_SECRETS = ("TELEGRAM_BOT_TOKEN", "SUPABASE_URL")
 SUPABASE_KEY_NAMES = ("SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SECRET_KEY")
-SDK_SCRIPTS = (
-    "https://telegram.org/js/telegram-web-app.js",
-    "https://sad.adsgram.ai/js/sad.min.js",
-)
+SDK_SCRIPTS = ("https://telegram.org/js/telegram-web-app.js",)
 
 
 def main() -> int:
@@ -47,7 +44,8 @@ def main() -> int:
     if not env.get("CLOUDFLARE_ACCOUNT_ID") and not args.dry_run:
         print("warn: CLOUDFLARE_ACCOUNT_ID is not set; Wrangler may still work, but setting it is recommended.")
 
-    require_env(env, "VITE_ADSGRAM_BLOCK_ID", skip=args.skip_ads_check)
+    if not args.skip_ads_check and not (env.get("VITE_REWARDED_AD_ZONE_ID") or env.get("VITE_ADSGRAM_BLOCK_ID")):
+        fail("missing required env var: VITE_REWARDED_AD_ZONE_ID")
     for name in RUNTIME_SECRETS:
         require_env(env, name, skip=args.dry_run)
     if not any(env.get(name) for name in SUPABASE_KEY_NAMES) and not args.dry_run:
@@ -102,7 +100,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-supabase-verify", action="store_true")
     parser.add_argument("--skip-ads-check", action="store_true")
     parser.add_argument("--skip-verify", action="store_true")
-    parser.add_argument("--no-fix-sdk-scripts", action="store_true", help="Fail instead of inserting Telegram/AdsGram scripts.")
+    parser.add_argument("--no-fix-sdk-scripts", action="store_true", help="Fail instead of inserting Telegram browser SDK script.")
     parser.add_argument("--allow-dirty", action="store_true", help="Allow deployment with uncommitted changes.")
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
@@ -166,10 +164,10 @@ def ensure_sdk_scripts(index_html: pathlib.Path, fix: bool, dry_run: bool) -> No
         fail("apps/game/index.html has no </head>; cannot insert SDK scripts")
     next_html = html.replace("  </head>", f"{insert}\n  </head>", 1)
     if dry_run:
-        print("dry-run: would insert SDK scripts into apps/game/index.html")
+        print("dry-run: would insert Telegram browser SDK script into apps/game/index.html")
         return
     index_html.write_text(next_html)
-    print("updated apps/game/index.html with Telegram/AdsGram SDK scripts")
+    print("updated apps/game/index.html with Telegram browser SDK script")
 
 
 def ensure_production_wrangler(config_path: pathlib.Path) -> None:

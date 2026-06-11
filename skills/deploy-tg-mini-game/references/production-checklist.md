@@ -28,22 +28,22 @@ The deployment script reads them from the shell or `--env-file` and pipes values
 
 These affect the Vite build:
 
-- `VITE_ADSGRAM_BLOCK_ID`: required for real rewarded ads
+- `VITE_AD_PROVIDER`: defaults to `monetag`
+- `VITE_REWARDED_AD_ZONE_ID`: required for real rewarded ads
 - `VITE_GAME_APP_ID`: optional, defaults to the shared template app id
 - `VITE_API_BASE_URL`: should usually be empty in production so API calls use the same Cloudflare Worker origin
 
-## Telegram and AdsGram
+## Telegram and Ad Provider
 
-Production HTML must load both browser SDKs before the Vite entry script:
+Production HTML must load the Telegram browser SDK before the Vite entry script:
 
 ```html
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 ```
 
 Without the Telegram SDK, `Telegram.WebApp.initData` can be absent and authenticated score/ad endpoints fail.
 
-Without the AdsGram SDK, rewarded revive falls back to a local fake delay and will not monetize.
+The default ad provider is Monetag. The app should use `monetag-tg-sdk`, which injects the Monetag SDK script from the configured zone id at runtime. If the provider is changed to AdsGram or another network, confirm that the provider adapter either loads its SDK or that the production HTML includes the required provider script.
 
 ## Supabase
 
@@ -79,4 +79,4 @@ After deployment:
 - `storage` is `supabase`, not `memory`
 - the game loads inside Telegram
 - score submit works with real Telegram `initData`
-- AdsGram rewarded ad resolves only after a completed rewarded view
+- the selected rewarded ad provider resolves only after a completed rewarded view
